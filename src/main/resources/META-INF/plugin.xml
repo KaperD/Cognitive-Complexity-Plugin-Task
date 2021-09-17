@@ -1,18 +1,33 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.kaperd.cognitivecomplexityplugintask</id>
-    <name>Cognitive-Complexity-Plugin-Task</name>
+    <id>ru.hse.plugin</id>
+    <name>Cognitive-Complexity-Task</name>
     <vendor>kaperd</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+    <depends>org.jetbrains.kotlin</depends>
+
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.kaperd.cognitivecomplexityplugintask.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.kaperd.cognitivecomplexityplugintask.services.MyProjectService"/>
+        <notificationGroup id="Task Notification Group" displayType="BALLOON" key="task.notification.group" bundle="messages.MyBundle"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.kaperd.cognitivecomplexityplugintask.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <actions>
+        <group id="ru.hse.plugin.ActionsGroup" text="JB Task Actions" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+
+            <action id="ru.hse.plugin.NamesAction" class="ru.hse.plugin.NamesAction" text="NamesAction"
+                    description="Shows project name and current file name">
+            </action>
+
+            <action id="ru.hse.plugin.FileTypeAction" class="ru.hse.plugin.FileTypeAction" text="FileTypeAction"
+                    description="Shows current file type">
+            </action>
+
+            <action id="ru.hse.plugin.MethodAction" class="ru.hse.plugin.MethodAction" text="MethodAction"
+                    description="Shows information about current Kotlin method">
+            </action>
+        </group>
+    </actions>
 </idea-plugin>
